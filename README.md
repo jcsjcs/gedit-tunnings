@@ -186,6 +186,30 @@ Input: **Current Selection**
 Output: **Replace the current selection**  
 Applicability: **All documents**
 
+
+#### Alternate Entry:
+
+This version uses Ruby and allows for a classpath variable if java has problems finding the rhino classes.  
+It also does not create a tempfile but uses jsbeautifier's ability to read from STDIN.  
+Set `jsbeautify_path` in the `Commands` to the right place.  
+Set `classpath` in the `Commands` to the required classpath or comment it out/delete the line if not required.  
+
+Description: **Beautify Javascript using einars jsbeautify**  
+Shortcut Key:  
+Commands:  
+    #!/usr/bin/env ruby
+
+    jsbeautify_path = "/home/james/utils/js-beautify/"
+    classpath       = "/usr/share/java/js.jar:/usr/share/java/jline.jar"
+    cmd             = "java org.mozilla.javascript.tools.shell.Main beautify-cl.js -i 4"
+
+    Dir.chdir jsbeautify_path
+    ENV["CLASSPATH"] = classpath if defined?(classpath) && !classpath.empty?
+    puts %x{#{cmd}}
+Input: **Current Selection**  
+Output: **Replace the current selection**  
+Applicability: **All documents**
+
 --------------------------------------------------------------------------------
 
 ### Insert Lipsum paragraph
